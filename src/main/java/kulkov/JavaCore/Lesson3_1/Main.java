@@ -104,8 +104,6 @@ public class Main {
         return result;
     }
 
-    // Todo: оптимизировать проверку.
-    // Отказаться от множественного return, от множественной проверки условий.
     private static boolean checkHoriz(int yCoord, int xCoord, char checkChar) {
 
         int checkCnt = 0;
