@@ -4,20 +4,21 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-/*
-    Переделать проверку победы, чтобы она не была реализована просто набором условий.
-    Попробовать переписать логику проверки победы, чтобы она работала для поля 5х5 и количества фишек 4 в линию.
-*** Доработать искусственный интеллект, чтобы он мог блокировать ходы игрока, и пытаться выиграть сам.
+    /*
+        Переделать проверку победы, чтобы она не была реализована просто набором условий.
+        Попробовать переписать логику проверки победы, чтобы она работала для поля 5х5 и количества фишек 4 в линию.
+    *** Доработать искусственный интеллект, чтобы он мог блокировать ходы игрока, и пытаться выиграть сам.
 
- */
+     */
     private static char[][] field;
     private static final char DOT_HUMAN = 'X';
     private static final char DOT_AI = 'O';
     private static final char DOT_EMPTY = '.';
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final Random RANDOM = new Random();
-    private static int fieldSizeX;
-    private static int fieldSizeY;
+    private static int fieldSizeX = 7;
+    private static int fieldSizeY = 7;
+    private static int WINNER_CNT = 5;              // Количество символов подряд для победы.
 
     public static void main(String[] args) {
         while (true) {
@@ -33,7 +34,7 @@ public class Main {
                 if (checkGame(DOT_AI, "AI win!!!")) break;
             }
             System.out.println("Wanna play again?");
-            if (!SCANNER.next().equals("y")){
+            if (!SCANNER.next().equals("y")) {
                 SCANNER.close();
                 break;
             }
@@ -79,20 +80,98 @@ public class Main {
     }
 
     private static boolean checkWin(char c) {
-        // hor
-        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
-        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
-        if (field[2][0] == c && field[2][1] == c && field[2][2] == c) return true;
 
-        // ver
-        if (field[0][0] == c && field[1][0] == c && field[2][0] == c) return true;
-        if (field[0][1] == c && field[1][1] == c && field[2][1] == c) return true;
-        if (field[0][2] == c && field[1][2] == c && field[2][2] == c) return true;
+        boolean result = false;
+        boolean result1 = false;
+        boolean result2 = false;
+        boolean result3 = false;
+        boolean result4 = false;
 
-        // dia
-        if (field[0][0] == c && field[1][1] == c && field[2][2] == c) return true;
-        if (field[0][2] == c && field[1][1] == c && field[2][0] == c) return true;
-        return false;
+        // Сканируем всё поле до 1-го вхождения переданного символа.
+        // Когда символ будет найден, вызываем поочерёдно методы проверки "выигрыша".
+        // Методы проверки "выигрыша" проверяют 4-ре возможных варианта.
+        for (int i = 0; i < fieldSizeX; i++) {
+            for (int j = 0; j < fieldSizeY; j++) {
+                if (field[i][j] == c) {
+                    result = (checkHoriz(i, j, c) ||
+                            checkVertic(i, j, c) ||
+                            checkDiagLeft(i, j, c) ||
+                            checkDiagRight(i, j, c));
+                }
+                if (result) return result;
+            }
+        }
+        return result;
+    }
+
+    // Todo: оптимизировать проверку.
+    // Отказаться от множественного return, от множественной проверки условий.
+    private static boolean checkHoriz(int yCoord, int xCoord, char checkChar) {
+
+        int checkCnt = 0;
+
+        for (int i = xCoord; i < WINNER_CNT; i++) {
+            if (i < fieldSizeX) {                                  // Проверка нахождения внутри игрового поля.
+                if (field[yCoord][i] == checkChar) {               // Проверка на символ.
+                    checkCnt++;
+                } else {
+                    checkCnt = 0;                                   // "Левый" символ, обнуляем счётчик победы.
+                }
+            }
+        }
+
+        return checkCnt == WINNER_CNT;                              // true - есть победная последовательность.
+    }
+
+    private static boolean checkVertic(int yCoord, int xCoord, char checkChar) {
+
+        int checkCnt = 0;
+
+        for (int i = yCoord; i < WINNER_CNT; i++) {
+            if (i < fieldSizeY) {                                  // Проверка нахождения внутри игрового поля.
+                if (field[i][xCoord] == checkChar) {               // Проверка на символ.
+                    checkCnt++;
+                } else {
+                    checkCnt = 0;                                   // "Левый" символ, обнуляем счётчик победы.
+                }
+            }
+        }
+        return checkCnt == WINNER_CNT;                              // true - есть победная последовательность.
+    }
+
+    private static boolean checkDiagRight(int yCoord, int xCoord, char checkChar) {
+
+        int checkCnt = 0;
+
+        for (int i = xCoord; i < WINNER_CNT; i++) {
+            if (i < fieldSizeY && i < fieldSizeX) {                    // Проверка нахождения внутри игрового поля.
+                if (field[i][i] == checkChar) {                        // Проверка на символ.
+                    checkCnt++;
+                } else {
+                    checkCnt = 0;                                       // "Левый" символ, обнуляет счётчик победы.
+                }
+            }
+        }
+        return checkCnt == WINNER_CNT;                                  // true - есть победная последовательность.
+    }
+
+    private static boolean checkDiagLeft(int yCoord, int xCoord, char checkChar) {
+
+        int checkCnt = 0;
+        int j = 0;
+
+        for (int i = yCoord; i < WINNER_CNT; i++) {
+
+            j = -i + (fieldSizeY - 1);
+            if (i < fieldSizeY && i < fieldSizeX) {                     // Проверка нахождения внутри игрового поля.
+                if (field[i][j] == checkChar) {                         // Проверка на символ.
+                    checkCnt++;
+                } else {
+                    checkCnt = 0;                                       // "Левый" символ, обнуляет счётчик победы.
+                }
+            }
+        }
+        return checkCnt == WINNER_CNT;                                  // true - есть победная последовательность.
     }
 
     private static boolean checkDraw() {
@@ -105,8 +184,8 @@ public class Main {
     }
 
     private static void initField() {
-        fieldSizeX = 3;
-        fieldSizeY = 3;
+//        fieldSizeX = 3;
+//        fieldSizeY = 3;
         field = new char[fieldSizeY][fieldSizeX];
         for (int y = 0; y < fieldSizeY; y++) {
             for (int x = 0; x < fieldSizeX; x++) {
