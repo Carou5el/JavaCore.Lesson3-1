@@ -33,7 +33,9 @@ public class Main {
 
         SpiralArray spiralArray = new SpiralArray(5, 5);
         spiralArray.getMatrix2D();
+        System.out.println();
         spiralArray.getInitSpiralArray();
+        System.out.println();
         spiralArray.getMatrix2D();
 
 //        spiralArray.getMatrix2D();

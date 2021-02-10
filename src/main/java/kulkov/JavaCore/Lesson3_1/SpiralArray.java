@@ -17,9 +17,17 @@ public class SpiralArray {
 
     public void getMatrix2D()   {
 
-        System.out.println(Arrays.deepToString(matrix2D));
-        System.out.printf("matrix2D.length = %d\n", matrix2D.length);
-        System.out.printf("matrix2D[0].length = %d\n", matrix2D[0].length);
+//        System.out.println(Arrays.deepToString(matrix2D));
+//        System.out.printf("matrix2D.length = %d\n", matrix2D.length);
+//        System.out.printf("matrix2D[0].length = %d\n", matrix2D[0].length);
+
+        // Красивый вывод 2-мерного массива.
+        for(int i = 0; i < matrix2D.length; i++)    {
+            for(int j = 0; j < matrix2D[0].length; j++) {
+                System.out.printf("%d\t", matrix2D[i][j]);
+            }
+            System.out.printf("\n");
+        }
     }
 
     /***
