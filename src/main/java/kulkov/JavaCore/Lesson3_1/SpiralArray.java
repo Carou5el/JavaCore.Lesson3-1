@@ -51,7 +51,7 @@ public class SpiralArray {
             Переменная stepCnt начинается с 1.
             Всего шагов необходимо выполнить (xSize * ySize).
          */
-        while(stepCnt <= xSize * ySize) {
+        while(true) {
 
             a = borderX0;
             // Обход горизонтально-вправо.
@@ -61,6 +61,7 @@ public class SpiralArray {
                  */
                 matrix2D[borderY0][a] = stepCnt;
                 ++stepCnt;
+                if(stepCnt > (xSize * ySize)) return;
             }
 
             borderY0++;
@@ -74,6 +75,7 @@ public class SpiralArray {
                  */
                 matrix2D[b][borderX] = stepCnt;
                 ++stepCnt;
+                if(stepCnt > (xSize * ySize)) return;
             }
 //            borderX--;
             borderY--;
@@ -86,6 +88,7 @@ public class SpiralArray {
                  */
                 matrix2D[borderY][c] = stepCnt;
                 ++stepCnt;
+                if(stepCnt > (xSize * ySize)) return;
             }
 //            borderY--;
             d = borderY - 1;
@@ -97,6 +100,7 @@ public class SpiralArray {
                  */
                 matrix2D[d][borderX0] = stepCnt;
                 ++stepCnt;
+                if(stepCnt > (xSize * ySize)) return;
             }
             borderX0++;
         }
