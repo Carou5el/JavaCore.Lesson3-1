@@ -21,6 +21,10 @@ public class SpiralArray {
         System.out.printf("matrix2D.length = %d\n", matrix2D.length);
         System.out.printf("matrix2D[0].length = %d\n", matrix2D[0].length);
     }
+
+    /***
+     * Метод заполняет 2-мерный массив (прямоугольный, в общем случае) возрастающими числами по спирали.
+     */
     public void getInitSpiralArray()    {
 
         int a = 0;
@@ -35,48 +39,56 @@ public class SpiralArray {
 
         int stepCnt = 1;
 
-        while(stepCnt < xSize * ySize) {                  // Для спиральной инициализации необходимо stepCnt-шагов.
+        /*
+            Переменная stepCnt начинается с 1.
+            Всего шагов необходимо выполнить (xSize * ySize).
+         */
+        while(stepCnt <= xSize * ySize) {
+
             a = borderX0;
-            for(; a < borderX; a++)  {                                            // Обход горизонтально-вправо.
+            // Обход горизонтально-вправо.
+            for(; a < borderX; a++)  {
                 /*
                     Заполнение горизонтали, элемент[0][a].
                  */
                 matrix2D[borderY0][a] = stepCnt;
-                stepCnt++;
+                ++stepCnt;
             }
 
             borderY0++;
             borderX--;
-
             b = borderY0;
 
-            for(; b < borderY; b++)  {                                            // Обход вертикально-вниз.
+            // Обход вертикально-вниз.
+            for(; b < borderY; b++)  {
                 /*
                     Заполнение вертикали, элемент[b][borderX].
                  */
                 matrix2D[b][borderX] = stepCnt;
-                stepCnt++;
+                ++stepCnt;
             }
-            borderX--;
+//            borderX--;
             borderY--;
+            c = borderX - 1;
 
-            c = borderX;
-
-            for(; c >= borderX0; c--)  {                                            // Обход горизонт-влево.
+            // Обход горизонт-влево.
+            for(; c >= borderX0; c--)  {
                 /*
                     Заполнене горизонтали, элемент[borderY][c].
                  */
                 matrix2D[borderY][c] = stepCnt;
-                stepCnt++;
+                ++stepCnt;
             }
+//            borderY--;
+            d = borderY - 1;
 
-            d = borderY;
-            for(; d >= borderY0; d--)  {                                            // Обход вертикал-вверх.
+            // Обход вертикал-вверх.
+            for(; d >= borderY0; d--)  {
                 /*
                     Заполнение вертикали, элемент[0][d].
                  */
                 matrix2D[d][borderX0] = stepCnt;
-                stepCnt++;
+                ++stepCnt;
             }
             borderX0++;
         }
