@@ -30,24 +30,32 @@ public class Main {
     private static int WINNER_CNT = 5;              // Количество символов подряд для победы.
 
     public static void main(String[] args) {
-        while (true) {
-            initField();
-            printField();
 
-            while (true) {
-                humanTurn();
-                printField();
-                if (checkGame(DOT_HUMAN, "Human wins!!!")) break;
-                aiTurn();
-                printField();
-                if (checkGame(DOT_AI, "AI win!!!")) break;
-            }
-            System.out.println("Wanna play again?");
-            if (!SCANNER.next().equals("y")) {
-                SCANNER.close();
-                break;
-            }
-        }
+        SpiralArray spiralArray = new SpiralArray(5, 5);
+        spiralArray.getMatrix2D();
+        spiralArray.getInitSpiralArray();
+        spiralArray.getMatrix2D();
+
+//        spiralArray.getMatrix2D();
+
+//        while (true) {
+//            initField();
+//            printField();
+//
+//            while (true) {
+//                humanTurn();
+//                printField();
+//                if (checkGame(DOT_HUMAN, "Human wins!!!")) break;
+//                aiTurn();
+//                printField();
+//                if (checkGame(DOT_AI, "AI win!!!")) break;
+//            }
+//            System.out.println("Wanna play again?");
+//            if (!SCANNER.next().equals("y")) {
+//                SCANNER.close();
+//                break;
+//            }
+//        }
     }
 
 
