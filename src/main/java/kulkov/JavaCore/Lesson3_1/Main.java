@@ -30,34 +30,42 @@ public class Main {
     private static int WINNER_CNT = 5;              // Количество символов подряд для победы.
 
     public static void main(String[] args) {
-
+    
+    /*
+        Задача со спиральной инициализацией 2-мерного массива.
+     */
+        // Создаём 2-мерный массив с произвольными размерами.
         SpiralArray spiralArray = new SpiralArray(7, 5);
-//        spiralArray.getMatrix2D();
-//        System.out.println();
+        // Выполнение "спиральной" инициализации.
         spiralArray.getInitSpiralArray();
         System.out.println();
+        // "Красивый" вывод на консоль массива.
         spiralArray.getMatrix2D();
+    
+    /*
+        Игра "крестики-нолики" с другой версией проверки выигрыша (не IF'ами).
+     */
+        spiralArray.getMatrix2D();
+    
+        System.out.println();
+        while (true) {
+            initField();
+            printField();
 
-//        spiralArray.getMatrix2D();
-
-//        while (true) {
-//            initField();
-//            printField();
-//
-//            while (true) {
-//                humanTurn();
-//                printField();
-//                if (checkGame(DOT_HUMAN, "Human wins!!!")) break;
-//                aiTurn();
-//                printField();
-//                if (checkGame(DOT_AI, "AI win!!!")) break;
-//            }
-//            System.out.println("Wanna play again?");
-//            if (!SCANNER.next().equals("y")) {
-//                SCANNER.close();
-//                break;
-//            }
-//        }
+            while (true) {
+                humanTurn();
+                printField();
+                if (checkGame(DOT_HUMAN, "Human wins!!!")) break;
+                aiTurn();
+                printField();
+                if (checkGame(DOT_AI, "AI win!!!")) break;
+            }
+            System.out.println("Wanna play again?");
+            if (!SCANNER.next().equals("y")) {
+                SCANNER.close();
+                break;
+            }
+        }
     }
 
 
